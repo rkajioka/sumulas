@@ -1,0 +1,21 @@
+{
+  "name": "sumulas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "node tests/conversion.test.js",
+    "setup-pdfjs": "npm install pdfjs-dist@3.11.174 && npm run copy-pdfjs",
+    "copy-pdfjs": "node -e \"const fs=require('fs'),p='node_modules/pdfjs-dist/build/';fs.copyFileSync(p+'pdf.min.js','lib/pdf.min.js');fs.copyFileSync(p+'pdf.worker.min.js','lib/pdf.worker.min.js');console.log('PDF.js copied to lib/');\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "pdfjs-dist": "^3.11.174"
+  }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Match Report PDF</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="popup-body">
+  <header class="popup-header">
+    <h1>Match Report PDF</h1>
+    <p class="popup-subtitle">Paste a direct link to a match report PDF.</p>
+  </header>
+
+  <label class="field-label" for="pdf-url">PDF link</label>
+  <input
+    type="url"
+    id="pdf-url"
+    class="field-input popup-url-input"
+    list="recent-urls"
+    placeholder="https://example.com/report.pdf"
+    spellcheck="false"
+    autofocus
+  />
+  <datalist id="recent-urls"></datalist>
+  <button type="button" id="btn-open-url" class="btn btn-primary popup-btn-full">
+    Open
+  </button>
+
+  <p id="status" class="status" role="status"></p>
+
+  <script src="link-history.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Match Report PDF</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="viewer-body">
+  <header class="viewer-toolbar">
+    <div class="toolbar-brand">
+      <h1 id="doc-title">Match report</h1>
+      <span id="page-count" class="meta-badge"></span>
+    </div>
+    <form id="url-form" class="toolbar-url-form">
+      <label class="sr-only" for="pdf-url">PDF link</label>
+      <input
+        type="url"
+        id="pdf-url"
+        class="toolbar-url-input"
+        list="recent-urls"
+        placeholder="Paste a match report PDF URL…"
+        spellcheck="false"
+        required
+      />
+      <datalist id="recent-urls"></datalist>
+      <button type="submit" class="btn btn-primary">Load</button>
+      <button type="button" id="btn-clear-history" class="btn btn-secondary btn-compact">
+        Clear history
+      </button>
+    </form>
+  </header>
+
+  <div id="loading" class="loading" hidden>
+    <p>Loading PDF…</p>
+  </div>
+
+  <div id="error" class="error-banner" hidden></div>
+
+  <main id="layout" class="layout" hidden>
+    <p id="disclaimer" class="disclaimer-banner" role="note" hidden>
+      Converted times for reference only — not an official match report.
+    </p>
+    <p id="warning" class="warning-banner" hidden></p>
+    <section id="pdf-column" class="pdf-column" aria-label="PDF pages"></section>
+  </main>
+
+  <script src="lib/pdf.min.js" id="pdfjs-script"></script>
+  <script src="conversion.js"></script>
+  <script src="pdf-fetch.js"></script>
+  <script src="link-history.js"></script>
+  <script src="canvas-sampling.js"></script>
+  <script src="viewer.js"></script>
+</body>
+</html>
