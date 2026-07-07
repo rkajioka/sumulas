@@ -1,24 +1,38 @@
 {
   "manifest_version": 3,
-  "name": "Match Report — Time Converter",
-  "version": "1.4.0",
-  "description": "Opens match report PDFs and converts event times (1T/2T/INT) to game minutes.",
+  "name": "Match Report Converter",
+  "short_name": "Match Converter",
+  "version": "1.0.0",
+  "description": "Reads CBF and FPF soccer match reports (súmulas) and automatically translates event times and sections into English format.",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Open match report PDF"
+    "default_title": "Match Report Converter",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    }
   },
   "background": {
     "service_worker": "background.js"
   },
   "permissions": ["storage", "webNavigation"],
   "host_permissions": [
-    "https://*/*",
-    "http://*/*"
+    "*://conteudo.cbf.com.br/*",
+    "*://conteudo.fpf.org.br/*"
   ],
   "web_accessible_resources": [
     {
       "resources": ["lib/*"],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "*://conteudo.cbf.com.br/*",
+        "*://conteudo.fpf.org.br/*"
+      ]
     }
   ]
 }
