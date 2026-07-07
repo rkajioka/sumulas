@@ -2,8 +2,15 @@
 
 chrome.webNavigation.onBeforeNavigate.addListener((details) => {
   // Only intercept main frame navigations (not iframes)
-  if (details.frameId === 0 && details.url.includes("conteudo.cbf.com.br/sumulas/")) {
+  if (details.frameId === 0 && 
+     (details.url.includes("conteudo.cbf.com.br/sumulas/") || 
+      details.url.includes("conteudo.fpf.org.br/sumulas/"))) {
     const extensionUrl = chrome.runtime.getURL("viewer.html") + "?url=" + encodeURIComponent(details.url);
     chrome.tabs.update(details.tabId, { url: extensionUrl });
   }
-}, { url: [{ hostContains: "conteudo.cbf.com.br", pathContains: "/sumulas/" }] });
+}, { 
+  url: [
+    { hostContains: "conteudo.cbf.com.br", pathContains: "/sumulas/" },
+    { hostContains: "conteudo.fpf.org.br", pathContains: "/sumulas/" }
+  ] 
+});

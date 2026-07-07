@@ -2,7 +2,7 @@
  * Match report time conversion (browser + Node tests).
  */
 const REGEX_TEMPO_PERIODO =
-  /(\+\s*\d{1,2}:00|\d{1,2}:00|-)\s+(1\s*T|2\s*T|INT)\b/gi;
+  /(\+\s*\d{1,2}(?::00)?|\d{1,2}:00|-)\s+(1\s*T|2\s*T|INT)\b/gi;
 
 function normalizeLineForMatch(line) {
   return String(line || "")
@@ -23,7 +23,7 @@ function normalizeTempoToken(tempo) {
   return String(tempo || "").replace(/\s+/g, "");
 }
 
-function convertTime(tempo, periodo) {
+function convertTime(tempo, periodo, isFPF = false) {
   const t = normalizeTempoToken(tempo);
   const p = normalizePeriod(periodo);
 
@@ -33,7 +33,7 @@ function convertTime(tempo, periodo) {
 
   if (!t || !p) return null;
 
-  const stoppage = t.match(/^\+(\d{1,2}):00$/);
+  const stoppage = t.match(/^\+(\d{1,2})(?::00)?$/);
   if (stoppage) {
     if (p === "1T") {
       return `45+${Number(stoppage[1])}'`;
@@ -46,6 +46,10 @@ function convertTime(tempo, periodo) {
 
   const minute = Number(match[1]);
 
+  if (isFPF) {
+    return `${minute}'`;
+  }
+
   if (p === "1T") {
     return `${minute}'`;
   }
@@ -57,11 +61,15 @@ function convertTime(tempo, periodo) {
   return null;
 }
 
-function needsOverlay(tempo, periodo, converted) {
+function needsOverlay(tempo, periodo, converted, isFPF = false) {
   if (periodo === "INT") return true;
 
   const t = normalizeTempoToken(tempo);
   if (t.startsWith("+")) return true;
+
+  if (isFPF) {
+    return false;
+  }
 
   const match = t.match(/^(\d{1,2}):00$/);
   if (!match) return true;

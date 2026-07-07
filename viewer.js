@@ -198,7 +198,7 @@ function detectEventsOnPage(textContent, viewport) {
     while ((match = REGEX_TEMPO_PERIODO.exec(lineText)) !== null) {
       const tempo = match[1];
       const periodo = normalizePeriod(match[2]);
-      const converted = convertTime(tempo, periodo);
+      const converted = convertTime(tempo, periodo, window.currentIsFPF);
       if (!converted) continue;
 
       const range =
@@ -210,7 +210,7 @@ function detectEventsOnPage(textContent, viewport) {
         periodo,
         tempo_convertido: converted,
         pos,
-        showOverlay: needsOverlay(tempo, periodo, converted),
+        showOverlay: needsOverlay(tempo, periodo, converted, window.currentIsFPF),
       });
     }
   }
@@ -502,6 +502,8 @@ async function processPdf(buffer, name, gen, sourceUrl) {
   }
 
   validatePdfBuffer(buffer);
+  
+  window.currentIsFPF = sourceUrl ? sourceUrl.includes("conteudo.fpf.org.br") : false;
 
   el.loading.hidden = false;
   el.layout.hidden = true;
