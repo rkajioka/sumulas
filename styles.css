@@ -1,15 +1,15 @@
 :root {
-  --bg: #0f1419;
-  --surface: #1a2332;
-  --surface-2: #243044;
-  --border: #334155;
-  --text: #e2e8f0;
-  --text-muted: #94a3b8;
-  --accent: #22c55e;
-  --accent-hover: #16a34a;
-  --danger: #f87171;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
-  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --surface-2: #f1f5f9;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --accent: #354bed;
+  --accent-hover: #2b3db5;
+  --danger: #ef4444;
+  --shadow: 0 4px 20px rgba(53, 75, 237, 0.08);
+  --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -21,6 +21,7 @@ body {
   font-family: var(--font);
   color: var(--text);
   background: var(--bg);
+  -webkit-font-smoothing: antialiased;
 }
 
 .sr-only {
@@ -38,48 +39,54 @@ body {
 
 .popup-body {
   width: 340px;
-  padding: 16px;
+  padding: 20px;
 }
 
 .popup-header h1 {
-  margin: 0 0 6px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  margin: 0 0 4px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.01em;
 }
 
 .popup-subtitle {
-  margin: 0 0 14px;
-  font-size: 0.82rem;
+  margin: 0 0 16px;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .field-label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   margin-bottom: 6px;
 }
 
 .field-input {
   width: 100%;
-  padding: 8px 10px;
-  border-radius: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: #ffffff;
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
 .field-input:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(53, 75, 237, 0.15);
 }
 
 .popup-url-input {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .popup-btn-full {
@@ -87,9 +94,10 @@ body {
 }
 
 .status {
-  margin: 8px 0 0;
-  font-size: 0.8rem;
+  margin: 10px 0 0;
+  font-size: 0.82rem;
   color: var(--accent);
+  font-weight: 500;
 }
 
 .status-error {
@@ -97,38 +105,45 @@ body {
 }
 
 .btn {
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
   border: none;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .btn-primary {
   background: var(--accent);
-  color: #052e16;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(53, 75, 237, 0.2);
 }
 
 .btn-primary:hover {
   background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(53, 75, 237, 0.3);
 }
 
 .btn-secondary {
-  background: var(--surface-2);
+  background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
 }
 
 .btn-secondary:hover {
-  background: #2d3f56;
+  background: var(--surface-2);
 }
 
 .btn-compact {
   flex-shrink: 0;
-  padding: 8px 10px;
-  font-size: 0.78rem;
+  padding: 8px 12px;
+  font-size: 0.8rem;
   white-space: nowrap;
 }
 
@@ -144,8 +159,10 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 10px 20px;
-  background: var(--surface);
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -162,8 +179,10 @@ body {
 
 .toolbar-brand h1 {
   margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.01em;
 }
 
 .toolbar-url-form {
@@ -171,27 +190,30 @@ body {
   flex: 1;
   min-width: 240px;
   max-width: 720px;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
 }
 
 .toolbar-url-input {
   flex: 1;
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 9px 14px;
+  border-radius: 8px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: #ffffff;
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
 }
 
 .toolbar-url-input:focus {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(53, 75, 237, 0.15);
 }
 
 .meta-badge {
   font-size: 0.75rem;
+  font-weight: 500;
   padding: 4px 10px;
   border-radius: 999px;
   background: var(--surface-2);
@@ -200,43 +222,45 @@ body {
 }
 
 .loading {
-  padding: 48px 20px;
+  padding: 64px 20px;
   text-align: center;
   color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .error-banner {
-  margin: 16px 20px;
-  padding: 14px 16px;
-  border-radius: 8px;
-  background: rgba(248, 113, 113, 0.12);
-  border: 1px solid var(--danger);
-  color: #fecaca;
+  margin: 20px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
   font-size: 0.9rem;
   white-space: pre-line;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .disclaimer-banner {
-  margin: 0 20px 8px;
-  padding: 10px 14px;
-  border-radius: 6px;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.35);
-  color: #bbf7d0;
-  font-size: 0.82rem;
-  line-height: 1.4;
+  margin: 0 24px 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .warning-banner {
-  margin: 0 20px 12px;
-  padding: 10px 14px;
-  border-radius: 6px;
-  background: rgba(251, 191, 36, 0.12);
-  border: 1px solid rgba(251, 191, 36, 0.45);
-  color: #fde68a;
-  font-size: 0.82rem;
-  line-height: 1.4;
+  margin: 0 24px 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .layout {
@@ -244,14 +268,15 @@ body {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  background: var(--surface);
 }
 
 .pdf-column {
-  padding: 20px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 32px;
 }
 
 .page-container {
@@ -261,8 +286,12 @@ body {
 
 .page-label {
   font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--text-muted);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .page-stage {
@@ -270,17 +299,19 @@ body {
   margin: 0 auto;
   box-shadow: var(--shadow);
   background: #fff;
-  border-radius: 4px;
+  border-radius: 8px;
   overflow: visible;
+  border: 1px solid var(--border);
 }
 
 .page-stage canvas {
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 8px;
 }
 
-/* Selectable text layer (PDF.js) — text is transparent but copyable */
+/* Selectable text layer (PDF.js) */
 .textLayer {
   position: absolute;
   inset: 0;
@@ -321,14 +352,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 4px;
+  padding: 0 6px;
   margin: 0;
-  border: 1px solid #bbf7d0;
-  border-radius: 4px;
-  background-color: #dcfce7;
-  color: #166534;
-  font-family: var(--font), Arial, Helvetica, sans-serif;
-  font-weight: 600;
+  border: 1px solid rgba(53, 75, 237, 0.3);
+  border-radius: 6px;
+  background-color: #eff2ff;
+  color: var(--accent);
+  font-family: var(--font);
+  font-weight: 700;
   letter-spacing: 0.02em;
   white-space: nowrap;
   text-align: center;
@@ -336,5 +367,8 @@ body {
   pointer-events: auto;
   user-select: text;
   -webkit-user-select: text;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 6px rgba(53, 75, 237, 0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
 }

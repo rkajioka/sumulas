@@ -186,16 +186,20 @@ function createOverlaySpan(pos, converted, tempo, periodo, canvas, ctx) {
     normalizeTempoToken(tempo) === "-" ? "- INT" : `${tempo} ${periodo}`;
   span.title = `${origin} → ${converted}`;
 
-  const height = Math.max(pos.height, 11);
-  const fontSize = Math.max(pos.fontSize || height * 0.88, 11);
-  const width = Math.max(pos.width, display.length * fontSize * 0.58 + 4);
+  const rawHeight = Math.max(pos.height, 11);
+  const fontSize = Math.max(pos.fontSize || rawHeight * 0.88, 11);
+  const rawWidth = Math.max(pos.width, display.length * fontSize * 0.58 + 4);
 
-  span.style.left = `${pos.left}px`;
-  span.style.top = `${pos.top}px`;
-  span.style.width = `${width}px`;
-  span.style.height = `${height}px`;
+  // Increase the pill size slightly for a better visual weight
+  const paddingX = 12; // 6px padding on left and right
+  const paddingY = 4;  // 2px padding on top and bottom
+
+  span.style.left = `${pos.left - (paddingX / 2)}px`;
+  span.style.top = `${pos.top - (paddingY / 2)}px`;
+  span.style.width = `${rawWidth + paddingX}px`;
+  span.style.height = `${rawHeight + paddingY}px`;
   span.style.fontSize = `${fontSize}px`;
-  span.style.lineHeight = `${height}px`;
+  span.style.lineHeight = `${rawHeight + paddingY}px`;
 
 
 
