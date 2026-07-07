@@ -35,6 +35,9 @@ function convertTime(tempo, periodo) {
 
   const stoppage = t.match(/^\+(\d{1,2}):00$/);
   if (stoppage) {
+    if (p === "1T") {
+      return `45+${Number(stoppage[1])}'`;
+    }
     return `90+${Number(stoppage[1])}'`;
   }
 
@@ -75,9 +78,9 @@ function overlayTimeRange(match) {
 
 function overlayDisplayText(converted, tempoOriginal) {
   const c = String(converted);
-  const stoppage = c.match(/^90\+(\d+)'$/);
+  const stoppage = c.match(/^(45|90)\+(\d+)'$/);
   if (stoppage) {
-    return `90+${stoppage[1]}`;
+    return `${stoppage[1]}+${stoppage[2]}`;
   }
 
   if (normalizeTempoToken(tempoOriginal) === "-") {

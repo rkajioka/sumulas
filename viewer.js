@@ -7,6 +7,25 @@ let pdfDoc = null;
 let loadGeneration = 0;
 let totalMatchCount = 0;
 
+const TRANSLATIONS = [
+  {
+    regex: /(?:Advertências\s*\/\s*Cartões\s+Amarelos|Cartões\s+Amarelos\s*\/\s*Advertências|Cartões\s+Amarelos|Advertências)/gi,
+    en: "Yellow Cards"
+  },
+  {
+    regex: /(?:Expulsões\s*\/\s*Cartões\s+Vermelhos|Cartões\s+Vermelhos\s*\/\s*Expulsões|Cartões\s+Vermelhos|Expulsões)/gi,
+    en: "Red Cards"
+  },
+  {
+    regex: /Substituições/gi,
+    en: "Substitutions"
+  },
+  {
+    regex: /\bGols\b/gi,
+    en: "Goals"
+  }
+];
+
 const el = {
   loading: document.getElementById("loading"),
   error: document.getElementById("error"),
@@ -145,9 +164,31 @@ function countTextChars(textContent) {
 function detectEventsOnPage(textContent, viewport) {
   const lines = extractLines(textContent);
   const events = [];
+  const translationEvents = [];
 
   for (const line of lines) {
     const { text: rawText } = buildTextMap(line.parts);
+    
+    // Translation detection
+    if (rawText) {
+      for (const trans of TRANSLATIONS) {
+        trans.regex.lastIndex = 0;
+        let match;
+        while ((match = trans.regex.exec(rawText)) !== null) {
+          const start = match.index;
+          const end = start + match[0].length;
+          const pos = matchPosition(line.parts, start, end, viewport);
+          if (pos) {
+            translationEvents.push({
+              pos,
+              original: match[0],
+              translated: trans.en,
+            });
+          }
+        }
+      }
+    }
+
     const lineText = normalizeLineForMatch(rawText || line.text);
     if (!lineText) continue;
 
@@ -174,10 +215,10 @@ function detectEventsOnPage(textContent, viewport) {
     }
   }
 
-  return events;
+  return { events, translationEvents };
 }
 
-function createOverlaySpan(pos, converted, tempo, periodo, canvas, ctx) {
+function createOverlaySpan(pos, converted, tempo, periodo, canvas, ctx, alignedCenterX) {
   const span = document.createElement("span");
   span.className = "tempo-substituido";
   const display = overlayDisplayText(converted, tempo);
@@ -194,12 +235,17 @@ function createOverlaySpan(pos, converted, tempo, periodo, canvas, ctx) {
   const paddingX = 12; // 6px padding on left and right
   const paddingY = 4;  // 2px padding on top and bottom
 
-  span.style.left = `${pos.left - (paddingX / 2)}px`;
+  const finalWidth = rawWidth + paddingX;
+  const finalHeight = rawHeight + paddingY;
+
+  // Use the aligned column center to perfectly align all pills in the same column
+  const centerX = alignedCenterX !== undefined ? alignedCenterX : (pos.left + pos.width / 2);
+  span.style.left = `${centerX - (finalWidth / 2)}px`;
   span.style.top = `${pos.top - (paddingY / 2)}px`;
-  span.style.width = `${rawWidth + paddingX}px`;
-  span.style.height = `${rawHeight + paddingY}px`;
+  span.style.width = `${finalWidth}px`;
+  span.style.height = `${finalHeight}px`;
   span.style.fontSize = `${fontSize}px`;
-  span.style.lineHeight = `${rawHeight + paddingY}px`;
+  span.style.lineHeight = `${finalHeight}px`;
 
 
 
@@ -212,6 +258,41 @@ function overlayPositionKey(pos, converted) {
 
 function addOverlays(overlayLayer, events, canvas, ctx) {
   const placed = new Set();
+
+  // Group events into columns to perfectly align them vertically
+  const columns = [];
+  for (const event of events) {
+    if (!event.pos || !event.showOverlay) continue;
+    const centerX = event.pos.left + event.pos.width / 2;
+    
+    let foundCol = null;
+    for (const col of columns) {
+      if (Math.abs(col.approxCenter - centerX) < 60) {
+        foundCol = col;
+        break;
+      }
+    }
+    if (foundCol) {
+      foundCol.events.push(event);
+    } else {
+      columns.push({ approxCenter: centerX, events: [event] });
+    }
+  }
+
+  // Find the true center of each column (using the widest text, typically XX:XX)
+  for (const col of columns) {
+    let maxW = -1;
+    let bestCenter = col.approxCenter;
+    for (const ev of col.events) {
+      if (ev.pos.width > maxW) {
+        maxW = ev.pos.width;
+        bestCenter = ev.pos.left + ev.pos.width / 2;
+      }
+    }
+    for (const ev of col.events) {
+      ev.alignedCenterX = bestCenter;
+    }
+  }
 
   for (const event of events) {
     if (!event.pos || !event.showOverlay) continue;
@@ -228,13 +309,62 @@ function addOverlays(overlayLayer, events, canvas, ctx) {
           event.tempo_original,
           event.periodo,
           canvas,
-          ctx
+          ctx,
+          event.alignedCenterX
         )
       );
     } catch {
       /* optional overlay */
     }
   }
+}
+
+function addTranslationOverlays(overlayLayer, events, canvas, ctx) {
+  for (const event of events) {
+    try {
+      overlayLayer.appendChild(createTranslationSpan(event, canvas, ctx));
+    } catch {}
+  }
+}
+
+function createTranslationSpan(event, canvas, ctx) {
+  const { pos, translated, original } = event;
+  const span = document.createElement("span");
+  span.className = "translation-substituido";
+  span.textContent = translated;
+  span.title = `${original} → ${translated}`;
+
+  const rawHeight = Math.max(pos.height, 12);
+  const fontSize = Math.max(pos.fontSize || rawHeight * 0.88, 12);
+  
+  const paddingX = 16;
+  const paddingY = 6;
+  
+  let bgColor = "#245899";
+  let textColor = "#ffffff";
+  
+  if (ctx) {
+    try {
+      const data = ctx.getImageData(Math.max(0, pos.left - 4), Math.max(0, pos.top + pos.height / 2), 1, 1).data;
+      if (data[0] > 200 && data[1] > 200 && data[2] > 200) {
+        bgColor = "#ffffff";
+        textColor = "#000000";
+      } else if (data[3] > 0) {
+        bgColor = `rgb(${data[0]}, ${data[1]}, ${data[2]})`;
+      }
+    } catch {}
+  }
+
+  span.style.left = `${pos.left - paddingX/2}px`;
+  span.style.top = `${pos.top - paddingY/2}px`;
+  span.style.width = `${pos.width + paddingX}px`;
+  span.style.height = `${rawHeight + paddingY}px`;
+  span.style.fontSize = `${fontSize}px`;
+  span.style.lineHeight = `${rawHeight + paddingY}px`;
+  span.style.backgroundColor = bgColor;
+  span.style.color = textColor;
+
+  return span;
 }
 
 async function renderPage(pageNum, gen) {
@@ -298,9 +428,10 @@ async function renderPage(pageNum, gen) {
 
   if (gen !== loadGeneration) return { matches: 0, textChars };
 
-  const events = detectEventsOnPage(textContent, viewport);
+  const { events, translationEvents } = detectEventsOnPage(textContent, viewport);
   const matchCount = events.length;
   addOverlays(overlay, events, canvas, ctx);
+  addTranslationOverlays(overlay, translationEvents, canvas, ctx);
 
   return { matches: matchCount, textChars };
 }
