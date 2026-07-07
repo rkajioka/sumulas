@@ -262,7 +262,7 @@ function addOverlays(overlayLayer, events, canvas, ctx) {
   // Group events into columns to perfectly align them vertically
   const columns = [];
   for (const event of events) {
-    if (!event.pos || !event.showOverlay) continue;
+    if (!event.pos) continue;
     const centerX = event.pos.left + event.pos.width / 2;
     
     let foundCol = null;
