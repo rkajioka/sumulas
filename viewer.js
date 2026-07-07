@@ -197,11 +197,7 @@ function createOverlaySpan(pos, converted, tempo, periodo, canvas, ctx) {
   span.style.fontSize = `${fontSize}px`;
   span.style.lineHeight = `${height}px`;
 
-  const bg =
-    typeof averageColorFromCanvas === "function"
-      ? averageColorFromCanvas(ctx, pos.left, pos.top, width, height)
-      : null;
-  span.style.background = bg || "#d9d9d9";
+
 
   return span;
 }
