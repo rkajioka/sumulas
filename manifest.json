@@ -27,7 +27,8 @@
     "*://conteudo.fpf.org.br/*",
     "*://egol.fcf.com.br/*",
     "*://sge.fmf.com.br/*",
-    "*://fafamapa.com.br/*"
+    "*://fafamapa.com.br/*",
+    "*://www.fafamazonas.com.br/*"
   ],
   "web_accessible_resources": [
     {
@@ -36,7 +37,8 @@
         "*://conteudo.cbf.com.br/*",
         "*://conteudo.fpf.org.br/*",
         "*://sge.fmf.com.br/*",
-        "*://fafamapa.com.br/*"
+        "*://fafamapa.com.br/*",
+        "*://www.fafamazonas.com.br/*"
       ]
     }
   ],
