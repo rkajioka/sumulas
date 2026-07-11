@@ -396,7 +396,7 @@ async function renderPage(pageNum, gen) {
   stage.style.height = `${viewport.height}px`;
 
   const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
   canvas.width = viewport.width;
   canvas.height = viewport.height;
 

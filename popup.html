@@ -3,33 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Match Report PDF</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Match Report Converter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 320px;
+      padding: 24px;
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(145deg, #0f1117 0%, #161927 100%);
+      color: #e2e8f0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .popup-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #354bed 0%, #6366f1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(53, 75, 237, 0.3);
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .popup-description {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .status-card {
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+      flex-shrink: 0;
+    }
+
+    .status-text {
+      font-size: 0.78rem;
+      color: #a5b4fc;
+      font-weight: 500;
+    }
+
+    .dev-credit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .dev-credit a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: #64748b;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .dev-credit a:hover {
+      color: #a5b4fc;
+    }
+  </style>
 </head>
-<body class="popup-body">
-  <header class="popup-header">
-    <h1>Match Report PDF</h1>
-    <p class="popup-subtitle">Paste a direct link to a match report PDF.</p>
-  </header>
+<body>
+  <div class="popup-icon" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+  </div>
 
-  <label class="field-label" for="pdf-url">PDF link</label>
-  <input
-    type="url"
-    id="pdf-url"
-    class="field-input popup-url-input"
-    list="recent-urls"
-    placeholder="https://example.com/report.pdf"
-    spellcheck="false"
-    autofocus
-  />
-  <datalist id="recent-urls"></datalist>
-  <button type="button" id="btn-open-url" class="btn btn-primary popup-btn-full">
-    Open
-  </button>
+  <h1>Match Report Converter</h1>
+  <p class="popup-description">
+    When you open a compatible match report PDF, it will be automatically converted with translated times and sections.
+  </p>
 
-  <p id="status" class="status" role="status"></p>
+  <div class="status-card">
+    <div class="status-dot"></div>
+    <span class="status-text">Extension active — ready to convert</span>
+  </div>
 
-  <script src="link-history.js"></script>
-  <script src="popup.js"></script>
+  <div class="dev-credit">
+    <a href="https://www.linkedin.com/in/rodrigokajioka/" target="_blank" rel="noopener noreferrer">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      Developed by Rodrigo Pantuffi
+    </a>
+  </div>
 </body>
 </html>
