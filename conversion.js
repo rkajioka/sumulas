@@ -2,7 +2,7 @@
  * Match report time conversion (browser + Node tests).
  */
 const REGEX_TEMPO_PERIODO =
-  /(\+\s*\d{1,2}(?::00)?|\d{1,2}:00|-)?\s*(1\s*T|2\s*T|INT)\b/gi;
+  /(\+\s*\d{1,2}(?::00)?|\d{1,2}:00|00:\d{1,2}:00|-)?\s*(1\s*T|2\s*T|1\s*TT|2\s*TT|INT)\b/gi;
 
 function normalizeLineForMatch(line) {
   return String(line || "")
@@ -16,6 +16,8 @@ function normalizePeriod(raw) {
     .replace(/\s+/g, "")
     .toUpperCase();
   if (s === "1T" || s === "2T" || s === "INT") return s;
+  if (s === "1TT") return "1T";
+  if (s === "2TT") return "2T";
   return raw;
 }
 
@@ -41,10 +43,19 @@ function convertTime(tempo, periodo, isFPF = false) {
     return `90+${Number(stoppage[1])}'`;
   }
 
-  const match = t.match(/^(\d{1,2}):00$/);
+  const match = t.match(/^(?:00:)?(\d{1,2}):00$/);
   if (!match) return null;
 
   const minute = Number(match[1]);
+
+  if (minute > 45) {
+    if (p === "1T") {
+      return `45+${minute - 45}'`;
+    }
+    if (p === "2T") {
+      return `90+${minute - 45}'`;
+    }
+  }
 
   if (isFPF) {
     return `${minute}'`;

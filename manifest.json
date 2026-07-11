@@ -28,7 +28,9 @@
     "*://egol.fcf.com.br/*",
     "*://sge.fmf.com.br/*",
     "*://fafamapa.com.br/*",
-    "*://www.fafamazonas.com.br/*"
+    "*://www.fafamazonas.com.br/*",
+    "*://*.futebolcapixaba.com/*",
+    "*://*.ferj360.com.br/*"
   ],
   "web_accessible_resources": [
     {
@@ -38,7 +40,9 @@
         "*://conteudo.fpf.org.br/*",
         "*://sge.fmf.com.br/*",
         "*://fafamapa.com.br/*",
-        "*://www.fafamazonas.com.br/*"
+        "*://www.fafamazonas.com.br/*",
+        "*://*.futebolcapixaba.com/*",
+        "*://*.ferj360.com.br/*"
       ]
     }
   ],

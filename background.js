@@ -8,7 +8,9 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
         (urlObj.hostname.includes("conteudo.fpf.org.br") && urlObj.pathname.includes("/sumulas/")) ||
         (urlObj.hostname.includes("sge.fmf.com.br") && urlObj.pathname.includes("/sumulas/")) ||
         (urlObj.hostname.includes("fafamapa.com.br") && urlObj.pathname.toLowerCase().endsWith(".pdf")) ||
-        (urlObj.hostname.includes("fafamazonas.com.br") && urlObj.pathname.includes("/sumula"))) {
+        (urlObj.hostname.includes("fafamazonas.com.br") && urlObj.pathname.includes("/sumula")) ||
+        (urlObj.hostname.includes("futebolcapixaba.com") && (urlObj.pathname.includes("/sumula") || urlObj.pathname.toLowerCase().endsWith(".pdf"))) ||
+        (urlObj.hostname.includes("ferj360.com.br") && urlObj.pathname.includes("/carioca/uploads/"))) {
       const extensionUrl = chrome.runtime.getURL("viewer.html") + "?url=" + encodeURIComponent(details.url);
       chrome.tabs.update(details.tabId, { url: extensionUrl });
     }
@@ -19,6 +21,8 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     { hostContains: "conteudo.fpf.org.br", pathContains: "/sumulas/" },
     { hostContains: "sge.fmf.com.br", pathContains: "/sumulas/" },
     { hostContains: "fafamapa.com.br", urlMatches: ".*\\.pdf" },
-    { hostContains: "fafamazonas.com.br", pathContains: "/sumula" }
+    { hostContains: "fafamazonas.com.br", pathContains: "/sumula" },
+    { hostContains: "futebolcapixaba.com" },
+    { hostContains: "ferj360.com.br", pathContains: "/carioca/uploads/" }
   ] 
 });
