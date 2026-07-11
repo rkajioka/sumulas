@@ -31,7 +31,8 @@
     "*://www.fafamazonas.com.br/*",
     "*://*.futebolcapixaba.com/*",
     "*://*.ferj360.com.br/*",
-    "*://*.fgf.com.br/*"
+    "*://*.fgf.com.br/*",
+    "*://*.fnf.org.br/*"
   ],
   "web_accessible_resources": [
     {
@@ -44,7 +45,8 @@
         "*://www.fafamazonas.com.br/*",
         "*://*.futebolcapixaba.com/*",
         "*://*.ferj360.com.br/*",
-        "*://*.fgf.com.br/*"
+        "*://*.fgf.com.br/*",
+        "*://*.fnf.org.br/*"
       ]
     }
   ],
