@@ -26,7 +26,8 @@
     "*://conteudo.cbf.com.br/*",
     "*://conteudo.fpf.org.br/*",
     "*://egol.fcf.com.br/*",
-    "*://sge.fmf.com.br/*"
+    "*://sge.fmf.com.br/*",
+    "*://fafamapa.com.br/*"
   ],
   "web_accessible_resources": [
     {
@@ -34,7 +35,8 @@
       "matches": [
         "*://conteudo.cbf.com.br/*",
         "*://conteudo.fpf.org.br/*",
-        "*://sge.fmf.com.br/*"
+        "*://sge.fmf.com.br/*",
+        "*://fafamapa.com.br/*"
       ]
     }
   ],
