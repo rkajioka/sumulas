@@ -457,7 +457,46 @@ function showLayout() {
   el.error.hidden = true;
   el.layout.hidden = false;
   if (el.disclaimer) el.disclaimer.hidden = false;
+
+  const viewToggle = document.getElementById("view-toggle");
+  if (viewToggle) viewToggle.hidden = false;
 }
+
+/* Toggle: Original ↔ Converted */
+(function initToggle() {
+  const checkbox = document.getElementById("toggle-converted");
+  const labelOriginal = document.getElementById("toggle-label-original");
+  const labelConverted = document.getElementById("toggle-label-converted");
+  if (!checkbox) return;
+
+  function applyToggle() {
+    const showConverted = checkbox.checked;
+
+    // Show/hide all overlay layers (time conversions)
+    document.querySelectorAll(".overlay-layer").forEach((layer) => {
+      layer.style.display = showConverted ? "" : "none";
+    });
+
+    // Show/hide all translation overlays
+    document.querySelectorAll(".translation-substituido").forEach((el) => {
+      el.style.display = showConverted ? "" : "none";
+    });
+
+    // Update label active states
+    if (labelOriginal) {
+      labelOriginal.classList.toggle("toggle-label--active", !showConverted);
+    }
+    if (labelConverted) {
+      labelConverted.classList.toggle("toggle-label--active", showConverted);
+    }
+
+    // Show/hide disclaimer
+    const disclaimer = document.getElementById("disclaimer");
+    if (disclaimer) disclaimer.hidden = !showConverted;
+  }
+
+  checkbox.addEventListener("change", applyToggle);
+})();
 
 function hideWarning() {
   if (el.warning) {
