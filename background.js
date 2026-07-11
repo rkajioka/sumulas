@@ -13,7 +13,8 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
         (urlObj.hostname.includes("ferj360.com.br") && urlObj.pathname.includes("/carioca/uploads/")) ||
         (urlObj.hostname.includes("fgf.com.br") && urlObj.pathname.includes("/sumulas/")) ||
         (urlObj.hostname.includes("fnf.org.br") && urlObj.pathname.includes("/files")) ||
-        (urlObj.hostname.includes("fpfpara.com.br") && urlObj.pathname.includes("/files/sumulas/"))) {
+        (urlObj.hostname.includes("fpfpara.com.br") && urlObj.pathname.includes("/files/sumulas/")) ||
+        (urlObj.hostname.includes("federacaopr.com.br") && urlObj.pathname.includes("/download/sumula"))) {
       const extensionUrl = chrome.runtime.getURL("viewer.html") + "?url=" + encodeURIComponent(details.url);
       chrome.tabs.update(details.tabId, { url: extensionUrl });
     }
@@ -29,6 +30,7 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     { hostContains: "ferj360.com.br", pathContains: "/carioca/uploads/" },
     { hostContains: "fgf.com.br", pathContains: "/sumulas/" },
     { hostContains: "fnf.org.br", pathContains: "/files" },
-    { hostContains: "fpfpara.com.br", pathContains: "/files/sumulas/" }
+    { hostContains: "fpfpara.com.br", pathContains: "/files/sumulas/" },
+    { hostContains: "federacaopr.com.br", pathContains: "/download/sumula" }
   ] 
 });

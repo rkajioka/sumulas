@@ -198,6 +198,14 @@ function detectEventsOnPage(textContent, viewport) {
     while ((match = REGEX_TEMPO_PERIODO.exec(lineText)) !== null) {
       const tempo = match[1];
       const periodo = normalizePeriod(match[2]);
+
+      if (tempo && /^\d{1,2}$/.test(tempo.trim())) {
+        const textBefore = lineText.substring(0, match.index);
+        if (textBefore.trim().length > 0) {
+          continue;
+        }
+      }
+
       const converted = convertTime(tempo, periodo, window.currentIsFPF);
       if (!converted) continue;
 

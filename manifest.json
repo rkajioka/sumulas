@@ -33,7 +33,8 @@
     "*://*.ferj360.com.br/*",
     "*://*.fgf.com.br/*",
     "*://*.fnf.org.br/*",
-    "*://*.fpfpara.com.br/*"
+    "*://*.fpfpara.com.br/*",
+    "*://*.federacaopr.com.br/*"
   ],
   "web_accessible_resources": [
     {
@@ -48,7 +49,8 @@
         "*://*.ferj360.com.br/*",
         "*://*.fgf.com.br/*",
         "*://*.fnf.org.br/*",
-        "*://*.fpfpara.com.br/*"
+        "*://*.fpfpara.com.br/*",
+        "*://*.federacaopr.com.br/*"
       ]
     }
   ],
