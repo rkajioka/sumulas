@@ -2,7 +2,7 @@
  * Match report time conversion (browser + Node tests).
  */
 const REGEX_TEMPO_PERIODO =
-  /(\+\s*\d{1,2}(?::00)?|\d{1,2}:00|-)\s+(1\s*T|2\s*T|INT)\b/gi;
+  /(\+\s*\d{1,2}(?::00)?|\d{1,2}:00|-)?\s*(1\s*T|2\s*T|INT)\b/gi;
 
 function normalizeLineForMatch(line) {
   return String(line || "")
@@ -27,7 +27,7 @@ function convertTime(tempo, periodo, isFPF = false) {
   const t = normalizeTempoToken(tempo);
   const p = normalizePeriod(periodo);
 
-  if (t === "-" && p === "INT") {
+  if (p === "INT") {
     return "46'";
   }
 

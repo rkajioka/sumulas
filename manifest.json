@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Match Report Converter",
   "short_name": "Match Converter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reads CBF and FPF soccer match reports (súmulas) and automatically translates event times and sections into English format.",
   "icons": {
     "16": "assets/icon16.png",
@@ -24,15 +24,27 @@
   "permissions": ["storage", "webNavigation"],
   "host_permissions": [
     "*://conteudo.cbf.com.br/*",
-    "*://conteudo.fpf.org.br/*"
+    "*://conteudo.fpf.org.br/*",
+    "*://egol.fcf.com.br/*",
+    "*://sge.fmf.com.br/*"
   ],
   "web_accessible_resources": [
     {
       "resources": ["lib/*"],
       "matches": [
         "*://conteudo.cbf.com.br/*",
-        "*://conteudo.fpf.org.br/*"
+        "*://conteudo.fpf.org.br/*",
+        "*://sge.fmf.com.br/*"
       ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://egol.fcf.com.br/*",
+        "*://*.fcf.com.br/*"
+      ],
+      "js": ["fcf_content.js"]
     }
   ]
 }
