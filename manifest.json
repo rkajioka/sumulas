@@ -32,7 +32,8 @@
     "*://*.futebolcapixaba.com/*",
     "*://*.ferj360.com.br/*",
     "*://*.fgf.com.br/*",
-    "*://*.fnf.org.br/*"
+    "*://*.fnf.org.br/*",
+    "*://*.fpfpara.com.br/*"
   ],
   "web_accessible_resources": [
     {
@@ -46,7 +47,8 @@
         "*://*.futebolcapixaba.com/*",
         "*://*.ferj360.com.br/*",
         "*://*.fgf.com.br/*",
-        "*://*.fnf.org.br/*"
+        "*://*.fnf.org.br/*",
+        "*://*.fpfpara.com.br/*"
       ]
     }
   ],
